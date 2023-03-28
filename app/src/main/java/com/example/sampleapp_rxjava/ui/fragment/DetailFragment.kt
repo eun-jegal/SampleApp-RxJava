@@ -25,9 +25,12 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as MainActivity).mainViewModel.selectedMovie.observe(viewLifecycleOwner, Observer {
             binding.apply {
-                titleAndYear.text = it.title
+                title.text = it.title
+                released.text = it.released
                 director.text = it.director
+                genre.text = it.genre
                 casts.text = it.actors
+                rating.text = it.imdbRating
                 plot.text = it.plot
             }
         })
