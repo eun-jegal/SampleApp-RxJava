@@ -36,7 +36,8 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             adapter = moviesAdapter
             moviesAdapter.setOnItemClickListener {
-                (activity as MainActivity).navigateToDetailFragment(it)
+                (activity as MainActivity).mainViewModel.selectMovie(it)
+                (activity as MainActivity).navigateToDetailFragment()
             }
         }
     }
@@ -45,7 +46,7 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).mainViewModel.run {
             getAllMovies()
             movieList.observe(
-                activity as MainActivity,
+                viewLifecycleOwner,
                 Observer {
                     if (it.isNullOrEmpty()) {
                         hideProgressbar()

@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_container_view, homeFragment).commit()
     }
 
-    fun navigateToDetailFragment(moviesItem: MoviesItem) {
-        mainViewModel.selectMovie(moviesItem)
+    fun navigateToDetailFragment() {
         val detailFragment = DetailFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, detailFragment).addToBackStack(null).commit()

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.sampleapp_rxjava.databinding.FragmentDetailBinding
 import com.example.sampleapp_rxjava.ui.MainActivity
 
@@ -22,14 +23,13 @@ class DetailFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val selectedMovie = (activity as MainActivity).mainViewModel.selectedMovie.value
-        selectedMovie?.let {
+        (activity as MainActivity).mainViewModel.selectedMovie.observe(viewLifecycleOwner, Observer {
             binding.apply {
                 titleAndYear.text = it.title
                 director.text = it.director
                 casts.text = it.actors
                 plot.text = it.plot
             }
-        }
+        })
     }
 }
