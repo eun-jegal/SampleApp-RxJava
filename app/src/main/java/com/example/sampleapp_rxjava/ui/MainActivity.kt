@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleapp_rxjava.R
 import com.example.sampleapp_rxjava.SampleApp
+import com.example.sampleapp_rxjava.data.model.MoviesItem
+import com.example.sampleapp_rxjava.ui.fragment.DetailFragment
+import com.example.sampleapp_rxjava.ui.fragment.HomeFragment
 import com.example.sampleapp_rxjava.ui.viewmodel.MainViewModel
 import com.example.sampleapp_rxjava.ui.viewmodel.MainViewModelFactory
 import javax.inject.Inject
@@ -21,5 +24,20 @@ class MainActivity : AppCompatActivity() {
 
         (application as SampleApp).appComponent.inject(this)
         mainViewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
+
+        initFragments()
+    }
+
+    private fun initFragments() {
+        val homeFragment = HomeFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view, homeFragment).commit()
+    }
+
+    fun navigateToDetailFragment(moviesItem: MoviesItem) {
+        mainViewModel.selectMovie(moviesItem)
+        val detailFragment = DetailFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view, detailFragment).addToBackStack(null).commit()
     }
 }

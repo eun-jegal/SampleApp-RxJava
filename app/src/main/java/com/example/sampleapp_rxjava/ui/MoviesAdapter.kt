@@ -10,6 +10,11 @@ import com.example.sampleapp_rxjava.databinding.ListItemBinding
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.CustomViewHolder>() {
 
     private val movieList = mutableListOf<MoviesItem>()
+    private var onItemClickListener: ((MoviesItem) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (MoviesItem) -> Unit) {
+        onItemClickListener = listener
+    }
 
     fun updateList(list: List<MoviesItem>) {
         movieList.run {
@@ -40,10 +45,11 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.CustomViewHolder>() {
             binding.apply {
                 title.text = movie.title
                 time.text = movie.released
-                Glide.with(poster)
-                    .load(movie.poster)
-                    .centerCrop()
-                    .into(poster)
+                root.setOnClickListener {
+                    onItemClickListener?.let {
+                        it(movie)
+                    }
+                }
             }
         }
     }

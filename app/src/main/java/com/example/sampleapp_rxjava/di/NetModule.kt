@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -34,8 +35,9 @@ class NetModule {
     @Singleton
     @Provides
     fun provideOkhttpClient(): OkHttpClient {
-        return OkHttpClient().newBuilder().addInterceptor(
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        ).build()
+        return OkHttpClient().newBuilder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .readTimeout(7, TimeUnit.SECONDS)
+            .build()
     }
 }

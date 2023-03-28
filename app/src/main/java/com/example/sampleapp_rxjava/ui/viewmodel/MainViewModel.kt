@@ -1,5 +1,6 @@
 package com.example.sampleapp_rxjava.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,15 +32,17 @@ class MainViewModel(
         }
 
         override fun onNext(t: Movies) {
+            Log.d("Eun","onNext: ")
             _movieList.postValue(t)
         }
 
         override fun onError(e: Throwable) {
-
+            Log.d("Eun","onError: " + e.stackTrace)
+            _movieList.postValue(null)
         }
 
         override fun onComplete() {
-
+            Log.d("Eun","onComplete: ")
         }
 
     }

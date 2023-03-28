@@ -29,28 +29,33 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecyclerView()
         requestMovieData()
-        (activity as MainActivity).mainViewModel.movieList.observe(
-            activity as MainActivity,
-            Observer {
-                if (it.isNullOrEmpty()) {
-                    hideProgressbar()
-                    showErrorMessage()
-                } else {
-                    hideProgressbar()
-                    updateList(it)
-                }
-            })
     }
 
     private fun initRecyclerView() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = moviesAdapter
+            moviesAdapter.setOnItemClickListener {
+                (activity as MainActivity).navigateToDetailFragment(it)
+            }
         }
     }
 
     private fun requestMovieData() {
-        (activity as MainActivity).mainViewModel.getAllMovies()
+        (activity as MainActivity).mainViewModel.run {
+            getAllMovies()
+            movieList.observe(
+                activity as MainActivity,
+                Observer {
+                    if (it.isNullOrEmpty()) {
+                        hideProgressbar()
+                        showErrorMessage()
+                    } else {
+                        hideProgressbar()
+                        updateList(it)
+                    }
+                })
+        }
     }
 
     private fun hideProgressbar() {

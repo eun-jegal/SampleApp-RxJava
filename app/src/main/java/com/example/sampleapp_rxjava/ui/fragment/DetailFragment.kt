@@ -5,18 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.sampleapp_rxjava.R
+import com.example.sampleapp_rxjava.databinding.FragmentDetailBinding
+import com.example.sampleapp_rxjava.ui.MainActivity
 
 class DetailFragment: Fragment() {
+
+    private lateinit var binding: FragmentDetailBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    ): View {
+        binding = FragmentDetailBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //ToDo
+        val selectedMovie = (activity as MainActivity).mainViewModel.selectedMovie.value
+        selectedMovie?.let {
+            binding.apply {
+                titleAndYear.text = it.title
+                director.text = it.director
+                casts.text = it.actors
+                plot.text = it.plot
+            }
+        }
     }
 }
