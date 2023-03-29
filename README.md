@@ -25,8 +25,75 @@ This sample app demonstrates the modern Android architecture pattern - MVVM(Mode
 </ul>
 <br>
 
-<!-- MVI Description -->
+<!-- RxJava Description -->
 <h2>RxJava</h2>
+<p>RxJava is a Java VM implementation of ReactiveX a library for composing asynchronous and event-based programs by using observable sequences.</p>
+
+<h3>Relationship between Observable and Observer</h3>
+<p>"Observable" and "Observer" are two key components of RxJava. We need to understand how data streams work within RxJava.</p>
+<p align="center">
+   <img src="https://user-images.githubusercontent.com/57670625/228633987-f68a5965-4e21-4406-9b5c-c83c6616de38.jpg" width="35%"/>
+</p>
+<ul>
+  <li><b>Oberservable</b>: Observable is a speaker which broadcasts the data value.</li>
+  <li><b>Operator</b>: Operator converts or modifies the data emitted from Observable before Observer receives the data.</li>
+  <li><b>Observer</b>: Observer is a subscriber of Observer. It receives the data emitted from Observable.</li>
+  <li><b>Subscription</b>: A relationship between Observable and and a single Observer. There can be multiple Observers subscribed to a single Observable.</li>
+</ul>
+<br>
+
+<h3>Schedulers</h3>
+<p>Schedulers is responsible for managing which thread to execute tasks related to the operation of an Observable chain. There are two main Schedulers widely used in Android platfrom.</p>
+<ul>
+  <li><b>Schedulers.io()</b>: This is used to perform non-CPU-intensive operations like making network calls, reading disc/files, database operations, etc., This maintains a pool of threads</li>
+  <li><b>AndroidSchedulers.mainThread()</b> This provides us access to the main thread of the application to perform actions like updating the UI. We shouldn’t perform any intensive operations on this thread as ANR dialog can be thrown.</li>
+</ul>
+<br>
+
+<h3>How to subscribe to Observable</h3>
+<pre><code>fun getAllMovies() {
+    val response = repository.getAllMovies()
+    response.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(observer)
+}
+</code></pre>
+<ul>
+  <li>When we call <b>getAllMovies()</b>, repository returns a response as "Observable" object from API call</li>
+  <li><b>subscribeOn(Schedulers.io())</b>: Tells Observable to run the task(fetching data from the server) on a background thread.</li>
+  <li><b>observeOn(AndroidSchedulers.mainThread())</b>: Tells the Observer to receive the data on the main UI thread so that you can update the screen.</li>
+  <li><b>subscribe()</b>: Takes Observer as a parameter which receives the data emitted by Observable.</li>
+</ul>
+<br>
+
+<h3>How to handle a subscription</h3>
+<p>Observer needs to take a proper action(update the screen) after receiving data emitted from Observable. Observer object needs to implement following interfaces to handle the result of data received from Observable.</p>
+<pre><code>private val observer: Observer<Movies> = object : Observer<Movies> {
+        override fun onSubscribe(d: Disposable) {
+            disposable = d
+        }
+
+        override fun onNext(t: Movies) {
+            _movieList.postValue(t)
+        }
+
+        override fun onError(e: Throwable) {
+            _movieList.postValue(null)
+        }
+
+        override fun onComplete() {
+        }
+
+    }
+</code></pre>
+
+<ul>
+  <li><b>onSubscribe()</b>: Called when Observer subscribes to Observable. It contains a Disposable instance as parameter whose Disposable.dispose() can be called anytime to cancel the connection or dispose the subscription when an Observer no longer wants to listen to Observable. In Android, disposable are very useful in avoiding memory leaks.</li>
+  <li><b>onNext()</b>: Called when Observable starts emitting the data.</li>
+  <li><b>onError()</b>: Called if any error occurs.</li>
+  <li><b>onComplete()</b>: Called when Observable completes the emission of all the items.</li>
+</ul>
+<br>
 
 <!-- App Architecture -->
 <h2>App Architecture</h2>
@@ -37,5 +104,6 @@ This sample app demonstrates the modern Android architecture pattern - MVVM(Mode
 <!-- References -->
 <h2>References</h2>
 <p>The purpose of this project was to understand how to use RxJava to operate asynchronous operations in Android apps. You can check out more information about RxJava in following links.</p>
+<li><a href="https://www.geeksforgeeks.org/types-of-observables-in-rxjava/">Types of Observables in RxJava</a></li>
 <li><a href="https://c1ctech.com/android-app-using-rxjava-rerofit-with-mvvm-architecture/">Android App using RxJava, Rerofit with MVVM Architecture</a></li>
  
