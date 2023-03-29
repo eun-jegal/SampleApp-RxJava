@@ -2,9 +2,10 @@
 <p>
 This sample app demonstrates the modern Android architecture pattern - MVVM(Model, View, ViewModel) using RxJava and Retrofit. The app provides detail information about movies fetched from the server.
 </p>
+<br>
 <p align="center">
-  <img src="" width="23%"/>
-  <img src="" width="23%"/>
+  <img src="https://user-images.githubusercontent.com/57670625/228626807-d472ff14-6c53-4f18-9ee3-1b91630ca200.png" width="23%"/>
+  <img src="https://user-images.githubusercontent.com/57670625/228626803-f6a485eb-67c2-4ba6-bfdf-36040b45ad54.png" width="23%"/>
 </p>
 <br>
 
