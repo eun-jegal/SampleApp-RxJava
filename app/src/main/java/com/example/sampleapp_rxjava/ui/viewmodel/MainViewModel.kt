@@ -24,7 +24,7 @@ class MainViewModel(
     val selectedMovie: LiveData<MoviesItem>
         get() = _selectedMovie
 
-    lateinit var disposable: Disposable
+    private lateinit var disposable: Disposable
 
     private val observer: Observer<Movies> = object : Observer<Movies> {
         override fun onSubscribe(d: Disposable) {
@@ -32,17 +32,14 @@ class MainViewModel(
         }
 
         override fun onNext(t: Movies) {
-            Log.d("Eun","onNext: ")
             _movieList.postValue(t)
         }
 
         override fun onError(e: Throwable) {
-            Log.d("Eun","onError: " + e.stackTrace)
             _movieList.postValue(null)
         }
 
         override fun onComplete() {
-            Log.d("Eun","onComplete: ")
         }
 
     }
@@ -56,5 +53,9 @@ class MainViewModel(
         response.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
+    }
+
+    fun clearDisposable() {
+        disposable.dispose()
     }
 }

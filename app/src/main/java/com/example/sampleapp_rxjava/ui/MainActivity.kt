@@ -39,4 +39,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, detailFragment).addToBackStack(null).commit()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainViewModel.clearDisposable()
+    }
 }
