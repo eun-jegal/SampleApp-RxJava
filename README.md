@@ -114,7 +114,7 @@ This sample app demonstrates the modern Android architecture pattern - MVVM(Mode
 
 <h3>UI Layer</h3>
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/57670625/228909919-3e7b3645-dd22-479a-9c89-961c5e7f1ece.jpg"/>
+   <img src="https://user-images.githubusercontent.com/57670625/228909919-3e7b3645-dd22-479a-9c89-961c5e7f1ece.jpg" width="85%"/>
 </p>
 <p>UI layer displays the application data and serves as the primary point for user interactions. Whenever the app data changes, the UI should update to reflect changes made by either user interaction or external input.</p>
 <ul>
@@ -126,7 +126,7 @@ This sample app demonstrates the modern Android architecture pattern - MVVM(Mode
 
 <h3>Data Layer</h3>
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/57670625/228909915-f4e4c15e-dd92-4128-8f4e-a8a3003a3ac8.jpg"/>
+   <img src="https://user-images.githubusercontent.com/57670625/228909915-f4e4c15e-dd92-4128-8f4e-a8a3003a3ac8.jpg" width="85%"/>
 </p>
 <p>Data layer is reponsible for containing application data and business logics. The data layer is consisted of repositories and data sources. It is important to keep each repository as a single source of truth.</p>
 <ul>
