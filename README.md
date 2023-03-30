@@ -97,9 +97,31 @@ This sample app demonstrates the modern Android architecture pattern - MVVM(Mode
 
 <!-- App Architecture -->
 <h2>App Architecture</h2>
+<p>This sample was built with Google's recommended modern app architecture - MVVM pattern. By separating multiple app components into two layers
+- UI and Data, the app is scalable, maintainable and testable.</p>
+<ul>
+  <li>Architectural Principles</li>
+    <ul>
+      <li>Separations of concerns</li>
+      <li>Drive UI from data models</li>
+      <li>Single source of truth</li>
+      <li>Unidirectional Data Flow</li>
+   </ul>
+</ul>
 <p align="center">
    <img src="https://user-images.githubusercontent.com/57670625/228396945-a6f69b5d-730a-4ce4-b1b3-bd4f24124070.jpg" width="85%"/>
 </p>
+
+<h3>UI Layer</h3>
+<p align="center">
+   <img src=""/>
+</p>
+<p>UI layer displays the application data and serves as the primary point for user interactions. Whenever the app data changes, the UI should update to reflect changes made by either user interaction or external input.</p>
+<ul>
+  <li>The main activity has a fragment container view and two fragments are replaced following user interactions. Main fragment displays a list of movies fetched from the server. When the user selects one of the movies, detailed information is displayed in the detail fragment.</li>
+  <li>MainViewModel holds state and plays as a bridge between UI elements and the data layer</li>
+  <li>UI elements request actions to ViewModel and observer ViewModel's livedatas to automatically update screens</li>
+</ul>
 
 <!-- References -->
 <h2>References</h2>
